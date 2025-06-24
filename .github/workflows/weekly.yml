@@ -1,4 +1,4 @@
-name: develop to main PR create every 5 minutes
+name: develop to main PR create every
 
 on:
   schedule:
@@ -15,16 +15,12 @@ jobs:
           ref: develop
 
       - name: Create Pull Request
-        id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          branch: auto-pr-from-develop-to-main-${{ github.run_number }}
+          base: main # PR 대상 브랜치
+          branch: auto-pr-from-develop-to-main-${{ github.run_number }} # 새로 생성할 브랜치 이름
           title: "🔀 자동 PR: develop → main"
           body: "이 PR은 5분마다 자동 생성 테스트용입니다."
           draft: false
           commit-message: "chore: sync develop changes"
-
-      - name: Check PR URL
-        run: echo "PR URL: ${{ steps.cpr.outputs.pull-request-url }}"
