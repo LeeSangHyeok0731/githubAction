@@ -1,4 +1,4 @@
-name: Auto PR from develop to main
+name: develop to main PR
 
 on:
   schedule:
