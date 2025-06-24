@@ -13,14 +13,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: develop
-          fetch-depth: 0 # 🔥 전체 커밋 히스토리를 가져와야 정확한 비교 가능
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          branch: auto-pr-from-develop-to-main-${{ github.run_number }}
+          base: main # PR 대상 브랜치
+          branch: auto-pr-from-develop-to-main-${{ github.run_number }} # 새로 생성할 브랜치 이름
           title: "🔀 자동 PR: develop → main"
           body: "이 PR은 5분마다 자동 생성 테스트용입니다."
           draft: false
