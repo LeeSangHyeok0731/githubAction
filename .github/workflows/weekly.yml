@@ -20,7 +20,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
-          branch: develop
+          branch: auto-pr-from-develop-to-main-${{ github.run_number }}
           title: "🔀 자동 PR: develop → main"
           body: |
             이 Pull Request는 GitHub Actions에 의해 자동으로 생성되었습니다.
