@@ -2,24 +2,25 @@ name: Auto PR from develop to main
 
 on:
   schedule:
-    # 5분마다 실행 (매 5분마다)
-    - cron: "*/5 * * * *"
-  workflow_dispatch: # 수동 실행도 가능
+    - cron: "*/5 * * * *" # 5분마다
+  workflow_dispatch:
 
 jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout develop branch
         uses: actions/checkout@v4
+        with:
+          ref: develop
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          head: develop
+          base: main # PR 대상 브랜치
+          branch: auto-pr-from-develop-to-main # 새로 생성할 브랜치 이름
           title: "🔀 자동 PR: develop → main"
-          body: |
-            이 PR은 GitHub Actions를 통해 5분마다 자동 생성됩니다. (테스트용)
+          body: "이 PR은 5분마다 자동 생성 테스트용입니다."
           draft: false
+          commit-message: "chore: sync develop changes"
