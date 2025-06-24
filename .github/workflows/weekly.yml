@@ -1,25 +1,25 @@
-# .github/workflows/auto-merge-pr.yml
-
-name: Auto Merge develop-to-main PR
+name: Auto PR from develop to main
 
 on:
   schedule:
-    - cron: "*/5 * * * *" # 매 5분마다
+    # 5분마다 실행 (매 5분마다)
+    - cron: "*/5 * * * *"
   workflow_dispatch: # 수동 실행도 가능
 
 jobs:
-  auto-merge:
+  create-pr:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout (필수는 아님)
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Auto-merge PR from develop to main
-        uses: peter-evans/merge-pull-request@v3
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash # 또는 merge, rebase
-          commit-message: pull-request-title
           base: main
           head: develop
+          title: "🔀 자동 PR: develop → main"
+          body: |
+            이 PR은 GitHub Actions를 통해 5분마다 자동 생성됩니다. (테스트용)
+          draft: false
